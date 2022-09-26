@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
 // const Task = () => {
 //     return (
 //         <p>This is a task~</p>
@@ -14,6 +15,19 @@ import Typography from '@mui/material/Typography';
 // }
 
 function Task(props){
+    const colorSelect=()=>{
+        let color
+        if (props.priority==="Low"){
+            color="green"
+        }
+        else if (props.priority==="Medium"){
+            color="rgb(255,191,88)"
+        }
+        else if (props.priority==="High"){
+            color="red"
+        }
+        return color
+    }
     return (
         <Grid
             item
@@ -44,10 +58,19 @@ function Task(props){
                             padding: '20px'
                         }}
                     >
-                    <Typography component="p" variant="subtitle2" color="text.primary">
-                        Due: {props.deadline}
-                    </Typography>
+                        <Typography component="p" variant="subtitle2" color="text.primary">
+                            Due: {props.deadline}
+                        </Typography>
                     </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <Chip label={props.priority} style={{backgroundColor:colorSelect(),color:'white'}} />
+                    </Box>
+
                     <Typography
                         component="p"
                         variant="subtitle1"

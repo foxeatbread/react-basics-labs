@@ -10,16 +10,17 @@ import Grid from '@mui/material/Grid';
 export default function App() {
   const [taskState, setTaskState] = useState({
     tasks:[ 
-    {id:1,title:"Dishes",deadline:"Tomorrow",description:"Empty dishwasher",done:false},
-    {id:2,title:"Coding",deadline:"Tonight",description:"Waching Googling and Wondering",done:false},
-    {id:3,title:"Showering",deadline:"Morning",description:"Boiling Water and Clean Up",done:false},
-    {id:4,title:"Living",deadline:"NobodyCares",description:"Often Confuse and Seldom Sober",done:false},
-    {id:5,title:"Sleeping",deadline:"WakeUp",description:"Have a Good Rest~",done:false}
+    {id:1,title:"Dishes",deadline:"Tomorrow",priority:"Low",description:"Empty dishwasher",done:false},
+    {id:2,title:"Coding",deadline:"Tonight",priority:"High",description:"Waching Googling and Wondering",done:false},
+    {id:3,title:"Showering",deadline:"Morning",priority:"Medium",description:"Boiling Water and Clean Up",done:false},
+    {id:4,title:"Living",deadline:"NobodyCares",priority:"Low",description:"Often Confuse and Seldom Sober",done:false},
+    {id:5,title:"Sleeping",deadline:"WakeUp",priority:"High",description:"Have a Good Rest~",done:false}
   ]
-})
+  })
   const [ formState, setFormState ] = useState({
     title: "",
     description: "",
+    priority:"",
     deadline: ""
   });
 
@@ -58,6 +59,9 @@ export default function App() {
       case "deadline":
           form.deadline = event.target.value;
           break;
+      case "priority":
+          form.priority = event.target.value;
+          break;
       default:
           form = formState;
     }
@@ -68,57 +72,65 @@ export default function App() {
 
   return (
     <div className="container">
+      {/* <Stack spacing={1} alignItems="center">
+      <Stack direction="row" spacing={1}>
+        <Chip label="Low" style={{backgroundColor:"green",color:'white'}} />
+        <Chip label="Hedium" style={{backgroundColor:"rgb(255,191,88)",color:'white'}} />
+        <Chip label="High" style={{backgroundColor:"red",color:'white'}} />
+      </Stack>
+      </Stack> */}
       {/* App Header */}
-      <Container component="main">
-        <Typography
-          component="h1"
-          variant="h2"
-          align="center"
-          gutterBottom
-          sx = {{
-            backgroundColor: 'gray',
-            textAlign: 'center',
-            color: 'white',
-            padding: '20px',
-            margin: '20px 0 40px 0',
-            borderRadius: '4px'
-          }}
-        >
-          Tasky
-        </Typography>
-      </Container>
+        <Container component="main">
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            gutterBottom
+            sx = {{
+              backgroundColor: 'gray',
+              textAlign: 'center',
+              color: 'white',
+              padding: '20px',
+              margin: '20px 0 40px 0',
+              borderRadius: '4px'
+            }}
+          >
+            Tasky
+          </Typography>
+        </Container>
       {/* End App Header */}
 
       {/* Task Card Grid */}
-      <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-top" justifyContent="center">
-          {taskState.tasks.map((task, index) => (
-            <Task 
-            title={task.title}
-            description={task.description}
-            deadline={task.deadline}
-            done={task.done}
-            key={task.id}
-            markDone = {() => doneHandler(index)}
-            deleteTask = {() => deleteHandler(index)}
-            />
-          ))}
-        </Grid>
-      </Container>
+        <Container maxWidth="md" component="main">
+          <Grid container spacing={5} alignItems="flex-top" justifyContent="center">
+            {taskState.tasks.map((task, index) => (
+              <Task 
+              title={task.title}
+              description={task.description}
+              deadline={task.deadline}
+              done={task.done}
+              priority={task.priority}
+              key={task.id}
+              markDone = {() => doneHandler(index)}
+              deleteTask = {() => deleteHandler(index)}
+              />
+            ))}
+          </Grid>
+        </Container>
       {/* End Task Card Grid */}
       
       {/* Footer - Add Task Form */}
-      <Container component="footer"
-        sx={{
-          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-          my: 6,
-          py: 6,
-        }}
-      >
-        <Grid container justifyContent="center">
-          <AddTaskForm submit={formSubmitHandler} change={formChangeHandler} />
-        </Grid>
-      </Container>
+        <Container component="footer"
+          sx={{
+            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+            my: 6,
+            py: 6,
+          }}
+        >
+          <Grid container justifyContent="center">
+            <AddTaskForm submit={formSubmitHandler} change={formChangeHandler} />
+          </Grid>
+        </Container>
       {/* End Footer */}
     </div>
   );
